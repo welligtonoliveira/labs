@@ -110,6 +110,7 @@ def create(data: list):
     df_database = pd.read_csv("./documents_database.csv", quoting=csv.QUOTE_ALL, na_filter=False)
 
     created, existing, error = 0, 0, 0
+    total = len(data)
 
     for document in data:
         loan_id = document["loan_id"]
@@ -131,7 +132,6 @@ def create(data: list):
             document["installments_table"] = table
 
         document_key = clicksign_api.create_document(document)
-        logging.info(f"Create Sucess Document ClickSign loan_id {loan_id}")
 
         if not document_key:
             error += 1
@@ -147,11 +147,11 @@ def create(data: list):
 
         # new_row_df = pd.DataFrame([row])
         df_database = pd.concat([df_database, pd.DataFrame([row])], ignore_index=True)
-        logging.info(f"Concact Document Sucess loan_id {loan_id}")
 
         # df_database = df_database.append(row, ignore_index = True)
 
         created += 1
+        logging.info(f"Create Sucess Document ClickSign loan_id {loan_id} {created}/{total}")
 
     df_database.to_csv("./documents_database.csv", index = False, quoting=csv.QUOTE_ALL)
 
@@ -178,6 +178,7 @@ def add_signatary():
         df_database.at[i, "signer_key"] = settings.signer_key
 
         created += 1
+        logging.info(f"Assigned Sucess, document_key {document_key} total {created} !")
 
     df_database.to_csv("./documents_database.csv", index = False, quoting=csv.QUOTE_ALL)
 
