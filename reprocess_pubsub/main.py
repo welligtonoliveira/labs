@@ -1,15 +1,15 @@
-import os
 import csv
 import json
+
 from google.cloud import pubsub_v1
 
 # Define o caminho da credencial JSON (assumindo que está na raiz do projeto)
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "sua-chave-de-servico.json"
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "sua-chave-de-servico.json"
 
 # Parâmetros do Pub/Sub
-PROJECT_ID = "seu-projeto-id"
-TOPIC_ID = "nome-do-topico"
-CSV_FILE = "seuarquivo.csv"
+PROJECT_ID = "dotz-noverde-prd"
+TOPIC_ID = "platform-insurances-create-zurich-policy"
+CSV_FILE = "policies_full.csv"
 
 # Inicializa o publisher
 publisher = pubsub_v1.PublisherClient()
@@ -20,8 +20,7 @@ def publish_messages_from_csv(csv_file):
         reader = csv.DictReader(f, delimiter=';')
         for row in reader:
             message = json.dumps({
-                "document": row["document"],
-                "contract_id": row["contract_id"]
+                "id": int(row["id"])
             }).encode("utf-8")
 
             future = publisher.publish(topic_path, message)
