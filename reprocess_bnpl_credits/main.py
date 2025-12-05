@@ -9,8 +9,8 @@ from google.cloud import pubsub_v1
 
 # Parâmetros do Pub/Sub
 PROJECT_ID = "dotz-noverde-prd"
-TOPIC_ID = "platform-payments-cancel-by-id-queue"
-CSV_FILE = "non_cancelled.csv"
+TOPIC_ID = "platform-servicing-topic-restore-credit-queue"
+CSV_FILE = "prorated_payment_restore_credit.csv"
 
 # Inicializa o publisher
 publisher = pubsub_v1.PublisherClient()
@@ -21,13 +21,19 @@ def publish_messages_from_csv(csv_file):
         reader = csv.DictReader(f, delimiter=',')
         for i, row in enumerate(reader, start=1):
             message = json.dumps({
-                "payment_id": row["ID"],
-                "cancel_reason": "payment without expense",
-                "referrer": "/event/cancel-by-id-queue"
+                "receivable_processed_at": row["receivable_processed_at"],
+                "loan_uuid": row["loan_uuid"],
+                "paid_installments_quantity": int(row["paid_installments_quantity"]),
+                "reason": "Baixa de pagamento processada"
             }).encode("utf-8")
 
+            # message = json.dumps({
+            #     "document": row["document"],
+            #     "reason": "Baixa de pagamento processada"
+            # }).encode("utf-8")
+
             future = publisher.publish(topic_path, message)
-            print(f"Mensagem enviada: Payment_id {row['ID']}, ID: {future.result()}")
+            print(f"Mensagem enviada: loan {row['loan_uuid']}, ID: {future.result()}")
 
             if i % 100 == 0:
                 print(f"{i} mensagens enviadas, pausando 2s...")
