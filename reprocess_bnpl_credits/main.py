@@ -9,8 +9,8 @@ from google.cloud import pubsub_v1
 
 # Parâmetros do Pub/Sub
 PROJECT_ID = "dotz-noverde-prd"
-TOPIC_ID = "platform-servicing-topic-restore-credit-queue"
-CSV_FILE = "prorated_payment_restore_credit.csv"
+TOPIC_ID = "techfin-pix-automatic-payee-payment-batch-cancellation"
+CSV_FILE = "reprocess_cancellation_recurrence_payments.csv"
 
 # Inicializa o publisher
 publisher = pubsub_v1.PublisherClient()
@@ -21,11 +21,14 @@ def publish_messages_from_csv(csv_file):
         reader = csv.DictReader(f, delimiter=',')
         for i, row in enumerate(reader, start=1):
             message = json.dumps({
-                "receivable_processed_at": row["receivable_processed_at"],
-                "loan_uuid": row["loan_uuid"],
-                "paid_installments_quantity": int(row["paid_installments_quantity"]),
-                "reason": "Baixa de pagamento processada"
+                "recurrence_id": row["recurrence_id"]
             }).encode("utf-8")
+            # message = json.dumps({
+            #     "receivable_processed_at": row["receivable_processed_at"],
+            #     "loan_uuid": row["loan_uuid"],
+            #     "paid_installments_quantity": int(row["paid_installments_quantity"]),
+            #     "reason": "Baixa de pagamento processada"
+            # }).encode("utf-8")
 
             # message = json.dumps({
             #     "document": row["document"],
@@ -33,7 +36,7 @@ def publish_messages_from_csv(csv_file):
             # }).encode("utf-8")
 
             future = publisher.publish(topic_path, message)
-            print(f"Mensagem enviada: loan {row['loan_uuid']}, ID: {future.result()}")
+            print(f"Mensagem enviada: recurrence_id {row['recurrence_id']}, ID: {future.result()}")
 
             if i % 100 == 0:
                 print(f"{i} mensagens enviadas, pausando 2s...")
