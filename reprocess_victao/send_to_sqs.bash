@@ -1,4 +1,4 @@
-filenames=`ls ./output/analyses_parent_2025_08_13*.json`
+filenames=`ls ./output/analyses_parent_2025_09_08_1654*.json`
 
 for filename in $filenames
 do

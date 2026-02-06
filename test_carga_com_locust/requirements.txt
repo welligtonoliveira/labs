@@ -1,2 +1,3 @@
 locust
 requests[socks]
+noverde-serpens==2.7.4

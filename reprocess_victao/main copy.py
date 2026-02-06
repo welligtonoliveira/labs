@@ -29,8 +29,8 @@ def write_json(data, base_filename, max_lines=10):
         print(f"Arquivo JSON gerado: {file_name}")
 
 def main():
-    csv_file = 'SettledLoansservicing2025-08-13.csv'
-    base_filename = './output/analyses_parent_2025_08_13'
+    csv_file = 'SettledLoansservicing2025-09-08_1654.csv'
+    base_filename = './output/analyses_parent_2025_09_08_1654'
 
     data = read_csv(csv_file)
     write_json(data, base_filename)
