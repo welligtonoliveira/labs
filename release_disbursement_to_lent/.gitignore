@@ -1,0 +1,6 @@
+.env
+__pycache__/
+*.pyc
+processed_ids.txt
+audit.log
+.venv
