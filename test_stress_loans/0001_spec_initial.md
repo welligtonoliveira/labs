@@ -17,7 +17,7 @@
 
     1 - POST-  curl --location 'https://api.stg.noverde.com.br/v1/loans' \
 --header 'Content-Type: application/json' \
---header 'Authorization: a267b223-c52f-4d35-8f8a-33d28577a4f7' \
+--header 'Authorization: xpto' \
 --data-raw '{
     "document": "88377452308",
     "name": "Tiago Felipe Lucas Santos",
@@ -54,7 +54,7 @@
 
     2 - PUT - curl --location --request PUT 'https://api.stg.noverde.com.br/v1/loans/ad9e3621-07d5-4a38-8082-4783d3ba50ac/credit-analysis' \
 --header 'Content-Type: application/json' \
---header 'Authorization: a267b223-c52f-4d35-8f8a-33d28577a4f7' \
+--header 'Authorization: xpto' \
 --data ''
 
 # regras
