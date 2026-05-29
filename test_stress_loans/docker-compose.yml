@@ -9,6 +9,6 @@ services:
     volumes:
       - .:/mnt/locust
     environment:
-      - AUTHORIZATION_TOKEN=${AUTHORIZATION_TOKEN:-a267b223-c52f-4d35-8f8a-33d28577a4f7}
+      - AUTHORIZATION_TOKEN=${AUTHORIZATION_TOKEN:-xpto}
     command: -f /mnt/locust/locustfile.py
 
