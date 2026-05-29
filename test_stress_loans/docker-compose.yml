@@ -8,7 +8,8 @@ services:
       - "8089:8089"
     volumes:
       - .:/mnt/locust
-    environment:
-      - AUTHORIZATION_TOKEN=${AUTHORIZATION_TOKEN:-xpto}
+    env_file:
+      - .env
     command: -f /mnt/locust/locustfile.py
+
 

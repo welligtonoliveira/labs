@@ -129,7 +129,7 @@ class LoanStressTestUser(HttpUser):
             }
         }
         
-        auth_token = os.getenv("AUTHORIZATION_TOKEN", "a267b223-c52f-4d35-8f8a-33d28577a4f7")
+        auth_token = os.getenv("AUTHORIZATION_TOKEN", "xpto")
         headers = {
             "Content-Type": "application/json",
             "Authorization": auth_token
