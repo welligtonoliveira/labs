@@ -2,6 +2,12 @@ from locust import HttpUser, task, between
 import random
 import json
 from datetime import datetime, timedelta
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
 
 # List of first names, middle names and last names to generate realistic Brazilian names
 FIRST_NAMES = [
@@ -123,10 +129,12 @@ class LoanStressTestUser(HttpUser):
             }
         }
         
+        auth_token = os.getenv("AUTHORIZATION_TOKEN", "a267b223-c52f-4d35-8f8a-33d28577a4f7")
         headers = {
             "Content-Type": "application/json",
-            "Authorization": "a267b223-c52f-4d35-8f8a-33d28577a4f7"
+            "Authorization": auth_token
         }
+
         
         loan_id = None
         

@@ -30,12 +30,32 @@ Toda a estrutura está autocontida na pasta `/test_stress_loans/`:
 ```bash
 test_stress_loans/
 ├── 0001_spec_initial.md    # Especificações do projeto
+├── .env                     # Arquivo ativo com chaves e credenciais (Ignorado no Git)
+├── .env_template            # Template de variáveis de ambiente do projeto
 ├── docker-compose.yml       # Orquestração do Locust via Docker
 ├── locustfile.py            # Definição do cenário de testes e geradores em Python
 ├── README.md                # Instruções completas de uso
 ├── requirements.txt         # Declaração das dependências Python
 └── run_stress_test.sh       # Script facilitador para execução local e em container
 ```
+
+---
+
+## ⚙️ Configuração de Variáveis de Ambiente (.env)
+
+O token de autenticação e outras credenciais são lidos a partir do arquivo `.env` para garantir a segurança dos acessos:
+
+1. Crie uma cópia do arquivo `.env_template` e nomeie-a como `.env`:
+   ```bash
+   cp .env_template .env
+   ```
+2. Abra o arquivo `.env` e configure o token de autorização desejado:
+   ```env
+   AUTHORIZATION_TOKEN=seu-token-aqui
+   ```
+
+*Nota: Tanto a execução local (via `python-dotenv`) quanto a execução isolada em container (via mapeamento no `docker-compose.yml`) leem automaticamente as variáveis configuradas neste arquivo.*
+
 
 ---
 
