@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  locust:
+    image: locustio/locust:2.29.0
+    container_name: locust_stress_loans
+    ports:
+      - "8089:8089"
+    volumes:
+      - .:/mnt/locust
+    command: -f /mnt/locust/locustfile.py
